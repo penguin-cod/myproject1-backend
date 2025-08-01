@@ -1,0 +1,12 @@
+package com.charlie.entity;
+
+
+import lombok.Data;
+@Data
+public class User {
+    private Long id;
+    private Integer userId;
+    private String username;
+    private String password;
+    private String role;
+}
