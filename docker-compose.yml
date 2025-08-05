@@ -1,0 +1,41 @@
+#比起application.properties更優先配置
+
+version: '3.8'
+
+services:
+  backend:
+    image: myproject1
+    container_name: springboot-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/project1?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+    networks:
+      - backend-network
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+#      自動創建project1資料庫
+      MYSQL_DATABASE: project1
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - backend-network
+
+#Volume 是 Docker 提供的一種方式來「永久保存資料」，即使容器刪除或重新啟動，資料也不會不見。
+#這個 volume 通常會掛載給 MySQL 容器用，讓資料庫的內容儲存在本地磁碟中，而不是僅存在容器裡。
+volumes:
+  mysql-data:
+
+#它們會透過 Docker 網路來彼此通訊。
+networks:
+  backend-network:
