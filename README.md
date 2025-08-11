@@ -1,4 +1,4 @@
-# myproject1 - 後端 (Backend)
+# project1 - 後端 (Backend)
 
 本倉庫為此專案的後端，使用 Spring Boot 架構，提供完整 API 與 JWT 驗證機制，並進行權限控管。
 
@@ -34,10 +34,12 @@
 
 ## ⚙️ 本機啟動方式
 
-請先設定好資料庫與 JDK 22
-
-匯入 sql檔案 project1_backup.sql
-
+下載mysql8.0.41和JDK 22 
+        ↓
+mysql設定username:root password:123456
+        ↓
+匯入 sql檔案 ./docker-mysql/project1_backup.sql
+        ↓
 bash:
 mvn spring-boot:run
 
@@ -54,8 +56,12 @@ http://localhost:8080/swagger-ui/index.html
 
 ## Docker
 
-下載DockerDesktop
-前後端必須先設置好
+how to use:
+1.docker pull penguin910/project1:backend
+2.docker pull penguin910/project1:frontend
+3.docker pull penguin910/project1:mysql
+4.download https://github.com/penguin-cod/myproject1-backend/blob/main/docker-compose.yml
+5.到docker-compose.yml的資料夾執行 docker compose up
 
 ---
 
