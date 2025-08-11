@@ -4,7 +4,7 @@ version: '3.8'
 
 services:
   backend:
-    image: project1-backend
+    image: penguin910/project1:backend
     container_name: backend
     ports:
       - "8080:8080"
@@ -18,8 +18,8 @@ services:
       - project1-network
 
   mysql:
-    image: mysql:8.0
-    container_name: mysql-db
+    image: penguin910/project1:mysql
+    container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: 123456
 #      自動創建project1資料庫
@@ -32,7 +32,7 @@ services:
       - project1-network
 
   frontend:
-    image: project1-frontend
+    image: penguin910/project1:frontend
     container_name: frontend
     ports:
       - "5173:5173"
