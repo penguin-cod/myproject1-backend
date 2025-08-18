@@ -51,6 +51,12 @@ public class SecurityConfig {
 //                                   │
 //                              載入使用者資料（CustomUserDetailsService）
 //                                   │
-//                              設定為 Spring Security 已登入狀態
+//                              封裝為UserDetail物件
+//                                   │
+//                              創建Spring Security認證物件UsernamePasswordAuthenticationToken
+//                                   │
+//                              把已驗證的使用者資料放進安全上下文SecurityContextHolder
+//                                   │
+//                              FilterSecurityInterceptor 授權檢查
 //                                   │
 //                              放行給 Controller

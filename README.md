@@ -97,6 +97,8 @@ how to use:
         ↓  
 Controller 接收實際請求  
         ↓  
+後端 Filter 檢查是否有正確標頭並驗證jwt，建立驗證物件   
+        ↓    
 Service 層處理業務邏輯與調度  
         ↓  
 ServiceImpl 層實作實際邏輯操作  
