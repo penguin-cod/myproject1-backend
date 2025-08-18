@@ -40,7 +40,7 @@ mysql設定username:root password:123456
         ↓  
 匯入 sql檔案 ./docker-mysql/project1_backup.sql  
         ↓  
-bash:  
+terminal:  
 mvn spring-boot:run  
 
 ---
