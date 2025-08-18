@@ -56,58 +56,58 @@ http://localhost:8080/swagger-ui/index.html
 
 ## Docker
 
-how to use:
-1.docker pull penguin910/project1:backend
-2.docker pull penguin910/project1:frontend
-3.docker pull penguin910/project1:mysql
-4.download https://github.com/penguin-cod/myproject1-backend/blob/main/docker-compose.yml
-5.到docker-compose.yml的資料夾執行 docker compose up
+how to use:  
+1.docker pull penguin910/project1:backend  
+2.docker pull penguin910/project1:frontend  
+3.docker pull penguin910/project1:mysql  
+4.download https://github.com/penguin-cod/myproject1-backend/blob/main/docker-compose.yml  
+5.到docker-compose.yml的資料夾執行 docker compose up  
 
 ---
 
 ## JWT流程架構
 
-[前端AXIOS登入請求] ──▶ 前端 → 透過Request Body傳送帳號密碼
-                         │
-                      後端 → 產生JWT 透過包奘類Result 經由Response Body回傳
-                         │
-                      前端 → 從Response Body將JWT取出後存到localstorage
-                         │
-[前端發送API請求] ──▶ 觸發攔截器，header攜帶令牌Authorization:`Bearer ${token}`]
-                                   │
-                            後端 → 驗證 JWT 合法性與過期
-                                   │
-                            後端 → 載入使用者資料(權限控管)
-                                   │
-                            後端 → 設定為 Spring Security 已登入狀態
-                                   │
-                            後端 → 放行給 Controller
-                                   │
-                            後端 → 完成API請求 透過包裝類 經由Response Body回傳
+[前端AXIOS登入請求] ──▶ 前端 → 透過Request Body傳送帳號密碼  
+                         │  
+                      後端 → 產生JWT 透過包奘類Result 經由Response Body回傳  
+                         │  
+                      前端 → 從Response Body將JWT取出後存到localstorage  
+                         │  
+[前端發送API請求] ──▶ 觸發攔截器，header攜帶令牌Authorization:`Bearer ${token}`]  
+                                   │  
+                            後端 → 驗證 JWT 合法性與過期  
+                                   │  
+                            後端 → 載入使用者資料(權限控管)  
+                                   │  
+                            後端 → 設定為 Spring Security 已登入狀態  
+                                   │  
+                            後端 → 放行給 Controller  
+                                   │  
+                            後端 → 完成API請求 透過包裝類 經由Response Body回傳  
 
 ---
 
 ## API請求細節
 
-前端發出 AXIOS 請求
-        ↓
-瀏覽器自動發送 CORS 預檢請求 (OPTIONS)
-        ↓
-後端 Filter 放行預檢請求
-        ↓
-Controller 接收實際請求
-        ↓
-Service 層處理業務邏輯與調度
-        ↓
-ServiceImpl 層實作實際邏輯操作
-        ↓
-Mapper 執行 SQL 與資料庫互動 (MyBatisPlus)
-        ↓
-結果逐層回傳至 Controller
-        ↓
-Controller 統一使用 Result 類封裝回應格式
-        ↓
-前端接收 JSON 回應資料與 HTTP 狀態碼
+前端發出 AXIOS 請求  
+        ↓  
+瀏覽器自動發送 CORS 預檢請求 (OPTIONS)  
+        ↓  
+後端 Filter 放行預檢請求  
+        ↓  
+Controller 接收實際請求  
+        ↓  
+Service 層處理業務邏輯與調度  
+        ↓  
+ServiceImpl 層實作實際邏輯操作  
+        ↓  
+Mapper 執行 SQL 與資料庫互動 (MyBatisPlus)  
+        ↓  
+結果逐層回傳至 Controller  
+        ↓  
+Controller 統一使用 Result 類封裝回應格式  
+        ↓  
+前端接收 JSON 回應資料與 HTTP 狀態碼  
 
 
 
