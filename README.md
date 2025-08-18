@@ -34,14 +34,14 @@
 
 ## ⚙️ 本機啟動方式
 
-下載mysql8.0.41和JDK 22 
-        ↓
-mysql設定username:root password:123456
-        ↓
-匯入 sql檔案 ./docker-mysql/project1_backup.sql
-        ↓
-bash:
-mvn spring-boot:run
+下載mysql8.0.41和JDK 22   
+        ↓  
+mysql設定username:root password:123456  
+        ↓  
+匯入 sql檔案 ./docker-mysql/project1_backup.sql  
+        ↓  
+bash:  
+mvn spring-boot:run  
 
 ---
 
