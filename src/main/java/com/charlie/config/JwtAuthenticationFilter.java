@@ -63,6 +63,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {//確保每�
             }
         }else{
             log.warn("未提供 Authorization 標頭，或格式錯誤");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
         //放行請求（給下一個 Filter 或 Controller）
         filterChain.doFilter(request, response);
