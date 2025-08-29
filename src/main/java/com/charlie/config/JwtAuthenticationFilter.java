@@ -34,6 +34,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {//確保每�
             filterChain.doFilter(request, response);//執行下一個filter或到最終的controller
             return;
         }
+        //登入 API 不做 JWT 驗證
+        String path = request.getRequestURI();
+        if ("/login".equals(path)) {
+            log.info("登入 API，跳過 JWT 驗證");
+            filterChain.doFilter(request, response);
+            return;
+        }
         
         String authHeader = request.getHeader("Authorization");//取得前端 Authorization 標頭
 
