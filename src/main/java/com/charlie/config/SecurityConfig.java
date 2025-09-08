@@ -28,9 +28,7 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasRole("admin")// 只有admin身分才能訪問/admin/api
                         .requestMatchers(// 放行swagger,
                                 "/v3/api-docs/**",        // Swagger 3
-                                "/swagger-resources/**",
-                                "/swagger-ui/**",         // Swagger 3
-                                "/webjars/**"
+                                "/swagger-ui/**"        // Swagger
                         ).permitAll()
                         .anyRequest().authenticated()         // 其他 API 都要驗證 token
                 )

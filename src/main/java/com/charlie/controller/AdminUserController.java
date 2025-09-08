@@ -52,7 +52,7 @@ public class AdminUserController {
         } else {
             log.warn("刪除失敗，使用者不存在 ID={}",id);
             // 可以用你自己定義的失敗Result格式，也可以拋異常
-            return Result.fail("商品不存在，刪除失敗");
+            return Result.fail("使用者不存在，刪除失敗");
         }
     }
 }

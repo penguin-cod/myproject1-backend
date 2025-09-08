@@ -28,7 +28,7 @@ public class LoginController {
         log.info("嘗試使用者登入:{}",dto.getUsername());
         User dbuser=userService.getByUsername(dto.getUsername());
         if (dbuser == null || !dbuser.getPassword().equals(dto.getPassword())) {
-            log.info("登入失敗，使用者{}",dto.getUsername());
+            log.info("登入失敗，使用者{}",dto.getUsername());   
             return Result.fail("帳號或密碼錯誤");
         }
         String token=jwtUtils.generateToken(dbuser.getUsername(), dbuser.getRole());

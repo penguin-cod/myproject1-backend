@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import com.charlie.common.utils.JwtUtils;
@@ -24,13 +27,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {//確保每�
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+    //swagger白名單
+    private final RequestMatcher swaggerWhitelist = new OrRequestMatcher(
+            new AntPathRequestMatcher("/v3/api-docs/**"),
+            new AntPathRequestMatcher("/swagger-ui/**"));
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+
+
         //當瀏覽器發出 CORS 預檢請求（OPTIONS 方法）時，直接放行，不處理 JWT 驗證。
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             log.info("OPTIONS預檢請求");
-            response.setStatus(HttpServletResponse.SC_OK);//http狀態碼設為200
             filterChain.doFilter(request, response);//執行下一個filter或到最終的controller
             return;
         }
@@ -41,6 +50,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {//確保每�
             filterChain.doFilter(request, response);
             return;
         }
+        //swagger頁面 不做 JWT 驗證
+        if (swaggerWhitelist.matches(request)){
+            log.info("swagger 頁面，跳過 JWT 驗證");
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+
+
         
         String authHeader = request.getHeader("Authorization");//取得前端 Authorization 標頭
 
@@ -71,6 +89,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {//確保每�
         }else{
             log.warn("未提供 Authorization 標頭，或格式錯誤");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
         //放行請求（給下一個 Filter 或 Controller）
         filterChain.doFilter(request, response);
