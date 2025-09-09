@@ -95,9 +95,11 @@ how to use:
         ↓  
 後端 Filter 放行預檢請求  
         ↓  
-Controller 接收實際請求  
+後端 Filter 接收實際請求  
         ↓  
-後端 Filter 檢查是否有正確標頭並驗證jwt，建立驗證物件   
+後端 Filter 檢查是否有正確標頭並驗證jwt，建立驗證物件
+        ↓
+Controller 接收實際請求
         ↓    
 Service 層處理業務邏輯與調度  
         ↓  

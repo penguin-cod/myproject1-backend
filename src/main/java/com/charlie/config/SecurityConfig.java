@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 //設定哪些路徑需要驗證、註冊過濾器
 @Configuration
 @EnableWebSecurity// 開啟 Spring Security 的自定義設定能力。定義「誰可以存取什麼」、「怎麼驗證登入」等等安全邏輯。
-public class SecurityConfig {
+public class    SecurityConfig {
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -21,7 +21,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .cors(cors -> {}) // 讀取MvcConfigurer配置
                 .csrf(csrf -> csrf.disable()) // 前後端分離 + JWT 的情境下，通常不需要 CSRF（跨站請求偽造）防護，這行是將其關閉。因為前端用的是 token。
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login").permitAll() // 登入開放，不需要 token
