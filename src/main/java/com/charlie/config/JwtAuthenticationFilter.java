@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.OrRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -70,16 +71,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {//確保每�
                 log.info("token驗證成功");
                 String username = jwtUtils.getUsernameFromToken(token);
 
-                // 載入 UserDetails（權限資料）
-                UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+                try {
+                    // 載入 UserDetails（權限資料）
+                    UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 
-                // 建立認證物件，userDetails.getAuthorities()拿到使用者權限
-                UsernamePasswordAuthenticationToken authentication =
+                    // 建立認證物件，userDetails.getAuthorities()拿到使用者權限
+                    UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-                // 設定安全上下文（讓 Spring Security 知道這是已認證使用者）
-                //設定到 SecurityContextHolder 中，這樣後面的控制器就可以透過 @AuthenticationPrincipal 或 SecurityContext 取得使用者資訊。
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                    // 設定安全上下文（讓 Spring Security 知道這是已認證使用者）
+                    //設定到 SecurityContextHolder 中，這樣後面的控制器就可以透過 @AuthenticationPrincipal 或 SecurityContext 取得使用者資訊。
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }catch(UsernameNotFoundException e) {
+                    log.warn("資料庫找不到使用者");
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    return;
+                }
             } else {
                 log.warn("token驗證失敗");
                 //token驗證失敗 狀態碼設為401
