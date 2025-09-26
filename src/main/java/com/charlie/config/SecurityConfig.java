@@ -9,10 +9,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+
 //設定哪些路徑需要驗證、註冊過濾器
 @Configuration
 @EnableWebSecurity// 開啟 Spring Security 的自定義設定能力。定義「誰可以存取什麼」、「怎麼驗證登入」等等安全邏輯。
-public class    SecurityConfig {
+public class SecurityConfig {
 
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;

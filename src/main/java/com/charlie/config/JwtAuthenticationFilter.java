@@ -58,9 +58,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {//確保每�
             return;
         }
 
-
-
-        
         String authHeader = request.getHeader("Authorization");//取得前端 Authorization 標頭
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
